@@ -137,7 +137,8 @@ class MongoQuery(NonrelQuery):
             query = self._mongo_query
 
         if filters.connector == OR:
-            assert '$or' not in query, "Multiple ORs are not supported"
+            # not a problem for Mongo >= 2.0; solves Django Admin search bug.
+            # assert '$or' not in query, "Multiple ORs are not supported"
             or_conditions = query['$or'] = []
 
         if filters.negated:
